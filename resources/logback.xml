@@ -1,0 +1,35 @@
+<configuration  scan="true" scanPeriod="30 seconds" >
+
+
+	<!--  error  信息的存储   文件形式存储-->
+	<!-- 生产环境下  使用 -->
+	<appender name="ErrFILE" class="ch.qos.logback.core.FileAppender">
+    <file>/Users/snow_young/tech/VoaHelper/logdir/foo.log</file>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+    	<level>ERROR</level>  
+    	<onMatch>ACCEPT</onMatch>  
+    	<onMismatch>DENY</onMismatch>  
+	</filter>  
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+	
+	<!-- info  debug  输出到  控制台  向上传递-->
+	 <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+   <!-- 对 包下的 所有 错误 进行监听 -->
+   <logger name="org.xu" level="debug">
+	 	<appender-ref ref="ErrFILE"/>
+   </logger> 
+
+	
+  <root level="debug">
+    <appender-ref ref="STDOUT" />   
+  </root>
+</configuration>
