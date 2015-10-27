@@ -1,0 +1,20 @@
+---
+Jedis:
+  ip: 127.0.0.1
+  port: 6379
+  pass: xujianhai
+  timeout: 30
+  pool:
+    maxActive: 3000
+    maxTotal: 1000
+    maxIdle: 1000
+    maxWait: 1500
+    testOnBorrow: true
+    testOnReturn: true
+---
+mongo:
+  ip: localhost
+  port: 27017
+  dbname: test5
+  maxSeconds: 30
+  maxConn: 30

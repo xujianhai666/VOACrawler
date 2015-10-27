@@ -1,3 +1,4 @@
-reader/TestUrlReader.class
 entrance/TestEntrance.class
 DownloadMethods/TestDownloadStrategy.class
+reader/TestUrlReader.class
+Config/TestConfig.class

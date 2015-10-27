@@ -1,7 +1,11 @@
+/Users/snow_young/tech/VOACrawler/src/main/java/org/xu/Configuration/Parser.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/POJO/Page.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/utils/TestLog.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/SaveMethods/UrlSave.java
+/Users/snow_young/tech/VOACrawler/src/main/java/org/xu/Configuration/MongoConfig.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/SaveMethods/MongoSave.java
+/Users/snow_young/tech/VOACrawler/src/main/java/org/xu/Configuration/RedisConfig.java
+/Users/snow_young/tech/VOACrawler/src/main/java/org/xu/Configuration/Config.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/frontier/DBPool.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/frontier/DBFrontier.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/DownloadMethods/MP3.java
@@ -9,8 +13,8 @@
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/utils/Strategy.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/entrance/Controller.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/DownloadMethods/DownloadStrategy.java
-/Users/snow_young/tech/VOACrawler/src/main/java/org/xu/SaveMethods/MongoPool.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/reader/UrlReader.java
+/Users/snow_young/tech/VOACrawler/src/main/java/org/xu/SaveMethods/MongoPool.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/DownloadMethods/Downloader.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/DownloadMethods/Mp3Downloader.java
 /Users/snow_young/tech/VOACrawler/src/main/java/org/xu/frontier/Frontier.java

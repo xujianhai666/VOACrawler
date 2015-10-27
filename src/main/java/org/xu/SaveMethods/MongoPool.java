@@ -19,6 +19,7 @@ public class MongoPool {
 	private static MongoClient mongoClient = null;
 	private static DB db = null;
 	
+	// ip port dbname maxSeconds maxConn
 	private static String dbName = "test5";
 	private static final int maxSeconds = 100;
 	private static final int maxConn = 20 ;
