@@ -2,11 +2,6 @@ package org.xu.Configuration;
 
 public class MongoConfig{
 
-	// private final static String ip;
-	// private final static String port;
-	// private final static String dbname;
-	// private final static String maxSeconds;
-	// private final static String maxConn;
 	private String ip;
 	private String port;
 	private String dbname;
@@ -15,6 +10,14 @@ public class MongoConfig{
 
 	public MongoConfig(){
 
+	}
+
+	public MongoConfig(MongoConfig config){
+		this.ip = config.getIp();
+		this.port = config.getPort();
+		this.dbname = config.getDbname();
+		this.maxSeconds = config.getMaxSeconds();
+		this.maxConn = config.getMaxConn();
 	}
 
 	public String getIp(){

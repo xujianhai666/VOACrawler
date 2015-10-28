@@ -1,5 +1,5 @@
 ---
-Jedis:
+jedis:
   ip: 127.0.0.1
   port: 6379
   pass: xujianhai
@@ -11,7 +11,7 @@ Jedis:
     maxWait: 1500
     testOnBorrow: true
     testOnReturn: true
----
+# －－－
 mongo:
   ip: localhost
   port: 27017
