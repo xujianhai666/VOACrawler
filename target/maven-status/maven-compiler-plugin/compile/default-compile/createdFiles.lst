@@ -1,10 +1,10 @@
 org/xu/entrance/Controller$1.class
+org/xu/Configuration/JedisConfig.class
 org/xu/frontier/DBPool.class
 org/xu/Configuration/Parser.class
 org/xu/utils/TestLog.class
 org/xu/SaveMethods/SaveStrategy.class
 org/xu/SaveMethods/MongoSave.class
-org/xu/Configuration/RedisConfig.class
 org/xu/frontier/Frontier.class
 org/xu/frontier/DBFrontier.class
 org/xu/DownloadMethods/Mp3Downloader.class

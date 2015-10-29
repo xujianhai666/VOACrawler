@@ -1,4 +1,4 @@
-package org.xu.Configuration;
+package org.xu.configuration;
 
 import java.io.File;
 import java.io.InputStream;

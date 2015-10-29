@@ -45,6 +45,7 @@ public class DBFrontier extends DBPool implements Frontier{
 	 * @return [description]
 	 */
 	private String getQ() {
+		// url 可能为空，根据list的poll实现来说，这样至少可以避免阻塞
 		Jedis jedis = getJedisObject();
 		String url =  jedis.lpop(queue);
 		recycleJedisOjbect(jedis);

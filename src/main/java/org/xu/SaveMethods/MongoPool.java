@@ -12,6 +12,14 @@ import com.mongodb.MongoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.xu.configuration.Config;
+import org.xu.configuration.MongoConfig;
+
+/**
+ * mongoclient 内部维护了一个线程池，所以代码端并不需要进行池的维护
+ * MongoClient把connection的默认值从以前的10个变成了现在的100个
+ * 去看一下源代码的实现, 弄清楚是否可以进行 并发数量的控制 以及 连接的如何控制
+ */
 public class MongoPool {
 	
 	private static  final Logger logger = LoggerFactory.getLogger(MongoPool.class);
@@ -20,87 +28,28 @@ public class MongoPool {
 	private static DB db = null;
 	
 	// ip port dbname maxSeconds maxConn
-	private static String dbName = "test5";
-	private static final int maxSeconds = 100;
-	private static final int maxConn = 20 ;
+	// 后面去掉 static 
+	private static MongoConfig config = Config.getInstance().getMongoConfig();
+
+	private static String dbName = config.getDbname();
+	private static final int maxSeconds = config.getMaxSeconds();
+	private static final int maxConn = config.getMaxConn();
 	
-	private static LinkedList<DB> pools = null;
-	
-	//修改操作频繁  使用LinkList
-	
-	// 可以晚点实例化
+	// 后面得改，根据需求配置决定是否进行实例化 
 	static{
-		logger.info("实例化数据库");
-		int conns = maxConn;
+		logger.info("实例化mongo数据库");
 
 		try {
-			mongoClient = new MongoClient("localhost", 27017);
-			pools = new LinkedList<DB>();
-			
-
-			while(conns!=maxConn)
-			{
-				conns++;
-				pools.add(mongoClient.getDB(dbName));
-			}
+			String host = config.getIp();
+			int port = config.getPort();
+			mongoClient = new MongoClient(host, port);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			// stop 如何停止？
-			if(conns == 0){
-				logger.error("non connection has been initialized");
-				e.printStackTrace();
-			}
-			logger.warn("has initialized " +conns +" connections, not achieving " + maxConn);
+			// stop 如何停止？,想直接停止，向上抛出吧
+			logger.error("主机地址不存在");
 		}
 	}
 
-	public static int getMaxConn() {
-		return maxConn;
-	}
-
-	// public static void setMaxConn(int maxConn) {		
-	// 	MongoPool.maxConn = maxConn;
-	// }
-
-	public static String getDbname() {
-		return dbName;
-	}
-
-	public static void setDBname(String dbName){
-		MongoPool.dbName = dbName;
-	}
-
-	/**
-	 * [getConn 内部实现有问题，应该从缓存中取]
-	 * @return [description]
-	 */
 	public static  DB  getConn() {
 		return mongoClient.getDB(dbName);
-		/*
-		 * mongoClient默认是长连接的
-		 */
-		// will change the pools to ConcurrentQueue
-		// 可能抛出异常
-		//     public E getFirst() {
-    //     final Node<E> f = first;
-    //     if (f == null)
-    //         throw new NoSuchElementException();
-    //     return f.item;
-    // }
-    // poll 方法不会抛出异常
-    //     public E poll() {
-    //     final Node<E> f = first;
-    //     return (f == null) ? null : unlinkFirst(f);
-    // }
-		// return  pools.getFirst();
-		// 可能返回null
-		// 
-		// return pools.poll();
-		// return mongoClient.getDB(dbName);
-	}
-	
-	public static void backConn(DB db)
-	{
-		pools.addLast(db);
 	}
 }

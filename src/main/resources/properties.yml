@@ -1,4 +1,5 @@
 ---
+# pool的抽象就有问题，应该设计成一个小类
 jedis:
   ip: 127.0.0.1
   port: 6379
@@ -7,14 +8,14 @@ jedis:
   pool:
     maxActive: 3000
     maxTotal: 1000
-    maxIdle: 1000
-    maxWait: 1500
+    maxIdle: 200
+    maxWait: 100
     testOnBorrow: true
     testOnReturn: true
-# －－－
+# －－－  两个竟然都没有指定配置文件， 应该可以制定其他的配置文件
 mongo:
   ip: localhost
   port: 27017
   dbname: test5
-  maxSeconds: 30
+  maxSeconds: 100
   maxConn: 30

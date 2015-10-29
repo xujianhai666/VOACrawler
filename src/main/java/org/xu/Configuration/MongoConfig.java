@@ -1,12 +1,12 @@
-package org.xu.Configuration;
+package org.xu.configuration;
 
 public class MongoConfig{
 
 	private String ip;
-	private String port;
+	private int port;
 	private String dbname;
-	private String maxSeconds;
-	private String maxConn;
+	private int maxSeconds;
+	private int maxConn;
 
 	public MongoConfig(){
 
@@ -28,11 +28,11 @@ public class MongoConfig{
 		this.ip = ip;
 	}
 
-	public String getPort(){
+	public int getPort(){
 		return this.port;
 	}
 
-	public void setPort(String port){
+	public void setPort(int port){
 		this.port = port;
 	} 
 
@@ -44,19 +44,19 @@ public class MongoConfig{
 		this.dbname = dbname;
 	}
 
-	public void setMaxSeconds(String maxSeconds){
+	public void setMaxSeconds(int maxSeconds){
 		this.maxSeconds = maxSeconds;
 	}
 
-	public String getMaxSeconds(){
+	public int getMaxSeconds(){
 		return this.maxSeconds;
 	}
 
-	public void setMaxConn(String maxConn){
+	public void setMaxConn(int maxConn){
 		this.maxConn = maxConn;
 	}
 
-	public String getMaxConn(){
+	public int getMaxConn(){
 		return this.maxConn;
 	}
 }

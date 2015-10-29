@@ -15,9 +15,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 // import com.google.gson.Gson;
 
-import org.xu.Configuration.MongoConfig;
-import org.xu.Configuration.RedisConfig;
-import org.xu.Configuration.Config; 
+import org.xu.configuration.MongoConfig;
+import org.xu.configuration.JedisConfig;
+import org.xu.configuration.Config; 
 
 
 public class TestConfig{
@@ -57,18 +57,36 @@ public class TestConfig{
 
     @Test
     public void testConfig(){
-        Config config = new Config();
+        // Config config = new Config();
+        Config config = Config.getInstance();
         try{
         config.parseConfig(new FileInputStream(new File(
              "/Users/snow_young/tech/VOACrawler/src/main/resources/properties.yml")));
         }catch(IOException e){
             // logger.in
         }
-        RedisConfig redis = config.getRedisConfig();
+        JedisConfig jedis = config.getJedisConfig();
         MongoConfig mongo = config.getMongoConfig();
         System.out.println("获取的redis映射");
-        System.out.println("redis port => " + redis.getPort());
-        System.out.println("redis pool => " + redis.getPool());
+        System.out.println("redis port => " + jedis.getPort());
+        System.out.println("redis pool => " + jedis.getPool());
+        Map<String, String> pool = jedis.getPool();
+
+        // int类型自动变成了double类型的String,最好回去做一下处理，毕竟，int转换成double还是比较方便的 
+        // 下面的方法会报这个错误
+        // java.lang.ClassCastException: java.lang.Double cannot be cast to java.lang.String
+        // String value = pool.get("maxWait");  必须增加一个string类型的转换
+        // gson有问题
+        String value = String.valueOf(pool.get("maxWait"));
+        value = value.substring(0,value.indexOf("."));
+        System.out.println("redis pool  Wait=> " + Integer.valueOf(value));
+        value = String.valueOf(pool.get("maxIdle"));
+        value = value.substring(0,value.indexOf("."));
+        // int intV = Integer.valueOf(value);
+        System.out.println("redis pool  maxidle=> " + Integer.valueOf(value));
+        System.out.println("redis pool  testOnReturn => " + pool.get("testOnReturn"));
+
+
         System.out.println("获取的mongo映射");
         System.out.println("mongo port => " + mongo.getPort());
         System.out.println("mongo dbname => " + mongo.getDbname());

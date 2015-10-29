@@ -26,9 +26,8 @@ public class MongoSave implements UrlSave{
 	 */
 	@Override
 	public void save(Object obj) {
-		// TODO Auto-generated method stub
 		if(obj==null){
-			logger.error("存入了一个 null对象");
+			logger.warn("存入了一个 null对象");
 			return;
 		}
 		Page  page = (Page) obj;
@@ -40,6 +39,5 @@ public class MongoSave implements UrlSave{
 			// 这里会抛出异常吗？
 			db.getCollection("pages").insert(new BasicDBObject("title",page.getTitle().toString()).append("mp3", page.getMp3().toString()).append("content",page.getContent().toString()));
 		}
-		MongoPool.backConn(db);
 	}
 }

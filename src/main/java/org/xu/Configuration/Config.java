@@ -1,4 +1,4 @@
-package org.xu.Configuration;
+package org.xu.configuration;
 
 import java.io.File;
 import java.io.InputStream;
@@ -13,8 +13,8 @@ import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.xu.Configuration.MongoConfig;
-import org.xu.Configuration.RedisConfig;
+import org.xu.configuration.MongoConfig;
+import org.xu.configuration.JedisConfig;
 
 // 对配置的有效性进行检查
 // 需要寻找最佳实践
@@ -23,6 +23,8 @@ public class Config{
 
 	private static final Logger logger = LoggerFactory.getLogger(Config.class);
 
+	private static Config config = new Config(); 
+
 	// 对象存储层(以存储为主，一半不涉及)
 	private boolean mongoenabled = false;
 	private boolean mysqlenabled = false;
@@ -30,15 +32,22 @@ public class Config{
 	// url 存储层 : 存取速度要快，永久性(防止程序异常中断后数据丢失)
 	// 应该避免在程序中修改，所以,get操作返回一个不可变的集合
 	// 那么，parser只能尽快的
-	private boolean redisenabled = false;
+	private boolean jedisenabled = false;
 	private boolean kestrelenabled = false;
 
 	private MongoConfig mongo = new MongoConfig();
-	private RedisConfig redis = new RedisConfig();
+	private JedisConfig jedis = new JedisConfig();
 
-	public Config(){
+	private Config(){
 
 	}
+
+	public static Config getInstance(){
+		return config;
+	}
+	// public Config(){
+
+	// }
 
 	public void parseConfig(String filename){
 	 	parseConfig(new File(filename));
@@ -66,8 +75,8 @@ public class Config{
                 //  yaml解析就没有异常吗？ 进行测试一下
                 if(entry.getKey().equals("jedis")){
                     System.out.println("匹配的 jedis key = " + entry.getKey());                        
-                    redis = gson.fromJson(String.valueOf(entry.getValue()), RedisConfig.class);
-                    redisenabled = true;
+                    jedis = gson.fromJson(String.valueOf(entry.getValue()), JedisConfig.class);
+                    jedisenabled = true;
                 }else if(entry.getKey().equals("mongo")){
                     System.out.println("匹配的 mongo key = " + entry.getKey());                        
                     mongo = gson.fromJson(String.valueOf(entry.getValue()), MongoConfig.class);
@@ -79,8 +88,8 @@ public class Config{
 
 	// 给redis队列进行装配的
 	// 配置不可修改
-	public RedisConfig getRedisConfig(){
-		return (new RedisConfig(redis));
+	public JedisConfig getJedisConfig(){
+		return (new JedisConfig(jedis));
 	}
 
 		// 给redis队列进行装配的

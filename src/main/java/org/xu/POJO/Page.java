@@ -25,7 +25,6 @@ public class Page {
 	public void setMp3(String mp3) {
 		this.mp3 = mp3;
 	}
-	
 }
 
 
