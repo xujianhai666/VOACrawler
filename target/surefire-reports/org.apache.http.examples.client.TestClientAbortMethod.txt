@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: DownloadMethods.TestDownloadStrategy
+Test set: org.apache.http.examples.client.TestClientAbortMethod
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.324 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.354 sec

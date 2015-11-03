@@ -10,6 +10,7 @@
 	<name>org.xu</name>
 	<url>http://maven.apache.org</url>
 
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.7.5</slf4j.version>
@@ -67,7 +68,10 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.4-alpha1</version>
+			<!-- <version>4.4-alpha1</version>
+				升级至4.5.1,添加了ssl
+			 -->
+			<version>4.5.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -78,6 +82,17 @@
 					<artifactId>commons-codec</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<!-- <version>4.4-alpha1</version>
+				升级至4.5.1,添加了ssl
+			 -->
+			<version>4.5.1</version>
+			<classifier>sources</classifier>
 		</dependency>
 		<!-- HttpClient 结束 -->
 
@@ -134,10 +149,6 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-
-
-
-
 		<!-- junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -148,5 +159,64 @@
 		<!-- junit 结束 -->
 	</dependencies>
 
-	
+	<!-- plugin-->
+	<build>
+		<plugins>
+<!-- 这个暂时用不到 
+<plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <configuration>
+        <appendAssemblyId>false</appendAssemblyId>
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+        <archive>
+            <manifest>
+                <mainClass>org.xu.entrance.Controller</mainClass>
+            </manifest>
+        </archive>
+    </configuration>
+    <executions>
+        <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+                <goal>assembly</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin> -->
+
+
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>org.xu.entrance.Bootstrap</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>assembly</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+	</plugins>
+	</build>
+
+
+
+
 </project>

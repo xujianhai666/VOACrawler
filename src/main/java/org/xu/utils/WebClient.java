@@ -43,10 +43,8 @@ public class WebClient {
 				instream = entity.getContent();
 			}
 		} catch (ClientProtocolException e1) {
-			// TODO Auto-generated catch block
 			logger.error("url 转转为 stream出错:"+ e1.toString());
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			logger.error("url 转转为 stream出错:"+ e1.toString());
 		}finally{
 			return instream;

@@ -1,0 +1,46 @@
+
+
+执行的debugH查看 ：
+
+o.a.h.i.c.PoolingHttpClientConnectionManager - Connection request: [route: {}->http://www.51voa.com:80][total kept alive: 0; route allocated: 0 of 10; total allocated: 0 of 10]
+
+o.a.h.i.c.PoolingHttpClientConnectionManager - Connection leased: [id: 0][route: {}->http://www.51voa.com:80][total kept alive: 0; route allocated: 1 of 10; total allocated: 1 of 10]
+
+o.a.h.impl.execchain.MainClientExec - Opening connection {}->http://www.51voa.com:80
+
+// 这里有了 域名和ip的映射
+o.a.h.i.c.DefaultHttpClientConnectionOperator - Connecting to www.51voa.com/110.76.43.78:80
+
+o.a.h.i.c.DefaultHttpClientConnectionOperator - Connection established 172.16.142.228:59899<->110.76.43.78:80
+
+o.a.h.impl.execchain.MainClientExec - Executing request GET /VOA_Standard_English/microscope-brings-tiny-worlds-closer-researchers-66090.html HTTP/1.1
+
+
+o.a.h.impl.execchain.MainClientExec - Target auth state: UNCHALLENGED
+o.a.h.impl.execchain.MainClientExec - Proxy auth state: UNCHALLENGED
+
+22:32:41.776 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Host: www.51voa.com
+22:32:41.782 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Connection: Keep-Alive
+22:32:41.847 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50
+22:32:41.848 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+
+
+22:32:41.848 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "GET /VOA_Standard_English/microscope-brings-tiny-worlds-closer-researchers-66090.html HTTP/1.1[\r][\n]"
+22:32:41.849 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "Host: www.51voa.com[\r][\n]"
+22:32:41.850 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "Connection: Keep-Alive[\r][\n]"
+22:32:41.853 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50[\r][\n]"
+
+看看 /r/n
+
+看看  robots : 还不错
+22:32:41.921 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "<meta name="robots" content="all" />[\r][\n]"
+
+
+
+org.apache.http.headers   org.apache.http.wire
+
+
+
+重点看看 ：
+
+	o.a.h.i.c.DefaultHttpClientConnectionOperator

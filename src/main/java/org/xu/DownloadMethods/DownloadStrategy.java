@@ -21,7 +21,8 @@ import org.xu.frontier.DBFrontier;
 import org.xu.frontier.Frontier;
 import org.xu.utils.TestLog;
 
-
+// 这里需要大量的解耦
+// 这个貌似不需要在框架层面操作
 public class DownloadStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(DownloadStrategy.class);

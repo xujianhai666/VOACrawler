@@ -15,6 +15,28 @@ import org.xu.frontier.Frontier;
 import org.xu.frontier.DBFrontier;
 import org.xu.reader.UrlReader;
 
+
+/**
+ * 整体结构 ：
+ * 	downloader下载插件(支持各种下载, ssl  mp3 等,httpclient就是其中的一种)  多重下载器，保存在多个地方 MP3_DIR  IMG_DIR pdf_dir
+ * 	抽象出download方法，提供外部使用，便于使用自定义的下载器 @downloader ,@downloader(RULE = 简单规则)  这个我会进行分离的
+ * 	独立downloader 和 hadle/middleware （map映射关系 : Rule->download）, 形成调用关系
+ *  没有明确定义的下载器，如何操作 ？ 自己实现了，怎么知道调用下载呢 ？ 
+ *
+ *  页面解析 －》 存储特殊信息 -> 需要自定义的下载器 （怎么调用，使用一个middleware） 
+ *
+ * 
+ * 	
+ * 	页面解析插件(request response处理, middleware层)
+ * 	customer层(通过注解获取用户定义的操作)  @page (request response)
+ *  配置层 : 最好还是管道的实现模式
+ *
+ * 看一下httpclient的实现,增加下载的并发控制 ， 并且添加到配置中
+ * download能不能让他们自定义控制呢？ @middleware  处理 request response ,已经有了@page了，可以改一下
+ * 还剩下  @Handle  handle(Page page) page 本质就是一个response ! 需要进行封装，便于操作，但是封装成什么呢 ？！
+ * page出了response的特性，应该像文本一样可以操作 htmlparser亲和，
+ */
+
 // 总控的入口
 public class Controller {
 
@@ -83,6 +105,7 @@ public class Controller {
 		// 怎么算是爬完了
 		public static  void bootstrap()
 		{
+        	// 启动
 			logger.info("开启下载总开关");
 			startUrl();
 			try{
@@ -110,16 +133,5 @@ public class Controller {
 				}
 			}
 			logger.info("关闭下载总开关");	
-		}
-
-		public static  void main(String[]args)
-		{
-
-			Controller.bootstrap();
-			// logger.info("开启下载总开关");
-			// startMP3();
-			// startDownn();
-			// startUrl();
-			// logger.info("关闭下载总开关");	
 		}
 }

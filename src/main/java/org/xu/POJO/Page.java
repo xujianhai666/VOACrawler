@@ -1,6 +1,7 @@
 package org.xu.POJO;
 
 // 页面的抽象表示
+// 框架层需要一个注解
 public class Page {
 
 	private String title;

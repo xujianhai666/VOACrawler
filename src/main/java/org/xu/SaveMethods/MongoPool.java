@@ -38,7 +38,6 @@ public class MongoPool {
 	// 后面得改，根据需求配置决定是否进行实例化 
 	static{
 		logger.info("实例化mongo数据库");
-
 		try {
 			String host = config.getIp();
 			int port = config.getPort();

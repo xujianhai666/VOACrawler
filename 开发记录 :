@@ -1,0 +1,43 @@
+开发记录 :
+
+jdk自带的httpurlconnection 的问题 :
+	http://android-developers.blogspot.jp/2011/09/androids-http-clients.html
+
+
+
+process page  handle
+
+pipeline/middleware handle(request,response)
+
+
+httpclient的实现 ：
+	HttpEntityEnclosingRequest
+
+
+====================
+go web :
+http://www.open-open.com/lib/view/open1416140852227.html
+
+不过的站点 ：
+http://www.widuu.com/archives/11/842.html
+
+
+牛逼的node :
+http://www.jb51.net/article/73953.htm
+
+
+
+
+builder模式可以放在 python的scrapy当中
+
+
+
+useragent : ok
+retry :   ok 
+redirect :  // 看情况，是否需要进行处理 ok(使用自带的足够了)
+signals :
+downloadtimeout
+stats :  ()
+
+
+Args的实现还是不错的

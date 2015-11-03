@@ -1,4 +1,7 @@
-entrance/TestEntrance.class
+metadata/TestMetadata.class
 DownloadMethods/TestDownloadStrategy.class
+entrance/TestEntrance.class
 reader/TestUrlReader.class
+httpclient/TestCustomClient.class
+httpclient/DefaultHttpRequestRetryHandler.class
 Config/TestConfig.class

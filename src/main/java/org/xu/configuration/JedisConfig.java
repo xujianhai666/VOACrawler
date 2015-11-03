@@ -4,29 +4,29 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 
-// 能不能写一个专门的解析
-// 如果配置文件仅仅设置了enable,那么，采用默认配置，具体的参数应该是什么呢？
+
+// 由于不需要配置的外部化，这里使用成员内部类
 public class JedisConfig{
 
-	public String ip;
-	public int port;
-	public String pass;
-	public int timeout;
+	private String ip;
+	private int port;
+	private String pass;
+	private int timeout;
 
-	Map pool = new HashMap<String, String>();
+	private Pool pool;
 
 	// gson不需要显示的构造函数也行
 	public JedisConfig(){
 
 	}
 
-	// gson不需要显示的构造函数也行
+	// gson不需要显式的构造函数也行
 	public JedisConfig(JedisConfig config){
 		this.ip = config.getIp();
 		this.port = config.getPort();
 		this.pass = config.getPass();
 		this.timeout = config.getTimeout(); 
-		this.pool = Collections.unmodifiableMap(config.getPool());
+		this.pool = new Pool(config.getPool());
 	}
 
 	public String getIp(){
@@ -61,11 +61,85 @@ public class JedisConfig{
 		this.timeout = timeout;
 	} 
 
-	public Map getPool(){
-		return pool;
+	public Pool getPool(){
+		return this.pool;
 	}
 
-	public void setMap(Map<String,String> map){
-		this.pool = map;
+	public void setPool(Pool pool){
+		this.pool = pool;
 	} 
+
+	// 奇怪，这里的private和public有什么区别,不需要static 类型吗，进行一下测试
+	public static class Pool{
+
+		private int maxActive;
+    	private int maxTotal;
+    	private int maxIdle;
+    	private int maxWait;
+    	private boolean testOnBorrow;
+    	private boolean testOnReturn;
+
+
+    	public Pool(){
+
+    	}
+
+    	public Pool(Pool pool){
+    		this.maxActive = pool.getMaxActive();
+    		this.maxTotal = pool.getMaxTotal();
+    		this.maxIdle = pool.getMaxIdle();
+    		this.maxWait = pool.getMaxWait();
+    		this.testOnBorrow = pool.getTestOnBorrow();
+    		this.testOnReturn = pool.getTestOnReturn();
+    	}
+
+		public int getMaxActive(){
+			return this.maxActive;
+		}
+
+		public void setMaxActive(int maxActive){
+			this.maxActive = maxActive;
+		} 
+
+		public int getMaxTotal(){
+			return this.maxTotal;
+		}
+
+		public void setMaxTotal(int maxTotal){
+			this.maxTotal = maxTotal;
+		} 		
+
+		public int getMaxIdle(){
+			return this.maxIdle;
+		}
+
+		public void setMaxIdle(int maxIdle){
+			this.maxIdle = maxIdle;
+		} 
+
+		public int getMaxWait(){
+			return this.maxWait;
+		}
+
+		public void setMaxWait(int maxWait){
+			this.maxWait = maxWait;
+		} 
+
+		public boolean getTestOnBorrow(){
+			return this.testOnBorrow;
+		}
+
+		public void setTestOnBorrow(boolean testOnBorrow){
+			this.testOnBorrow = testOnBorrow;
+		} 
+
+		public boolean getTestOnReturn(){
+			return this.testOnReturn;
+		}
+
+		public void setTestOnReturn(boolean testOnReturn){
+			this.testOnReturn = testOnReturn;
+		} 
+
+	}
 }

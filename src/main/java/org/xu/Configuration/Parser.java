@@ -40,22 +40,7 @@ public class Parser{
 	 }
 
 	 public void parseConfig(InputStream is){
-	 	// Yaml yaml = new Yaml();
-	 	// for(Object data : yaml.loadAll(is)){
-	 	// 	LinkedHashMap<String,Object> map = (LinkedHashMap<String,Object>) data;
-   //          for(Map.Entry<String,Object> entry : map.entrySet()){
-   //              System.out.println("key = " + entry.getKey());
-   //              //  == 这个是引用一致性
-   //              //  equals
-   //              if(entry.getKey().equals("jedis")){
-   //                  System.out.println("匹配的 jedis key = " + entry.getKey());                        
-   //                  redis = gson.fromJson(String.valueOf(entry.getValue()), RedisConfig.class);
-   //              }else if(entry.getKey().equals("mongo")){
-   //                  System.out.println("匹配的 mongo key = " + entry.getKey());                        
-   //                  mongo = gson.fromJson(String.valueOf(entry.getValue()), MongoConfig.class);
-   //             	}
-	 	// 	}
-	 	// }
+
 	 }
 	 // 检查文件是否存在
 }

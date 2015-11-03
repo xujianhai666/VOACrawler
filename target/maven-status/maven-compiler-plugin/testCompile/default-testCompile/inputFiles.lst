@@ -1,2 +1,7 @@
-/Users/snow_young/tech/VoaHelper/VOACrawler/src/test/java/VOACrawler/DownloaderMethods/TestDownloadStrategy.java
-/Users/snow_young/tech/VoaHelper/VOACrawler/src/test/java/VOACrawler/reader/TestUrlReader.java
+/Users/snow_young/tech/VOACrawler/src/test/java/VOACrawler/Config/TestConfig.java
+/Users/snow_young/tech/VOACrawler/src/test/java/VOACrawler/DownloaderMethods/TestDownloadStrategy.java
+/Users/snow_young/tech/VOACrawler/src/test/java/VOACrawler/metadata/TestMetadata.java
+/Users/snow_young/tech/VOACrawler/src/test/java/VOACrawler/entrance/TestEntrance.java
+/Users/snow_young/tech/VOACrawler/src/test/java/VOACrawler/httpclient/TestClientConfiguration.java
+/Users/snow_young/tech/VOACrawler/src/test/java/VOACrawler/reader/TestUrlReader.java
+/Users/snow_young/tech/VOACrawler/src/test/java/VOACrawler/httpclient/TestHttpClient.java

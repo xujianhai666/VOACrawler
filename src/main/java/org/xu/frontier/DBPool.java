@@ -19,6 +19,7 @@ import org.xu.configuration.JedisConfig;
 
 /**
  * java usage of redis
+ * 所有的配置可以设计成 管道模式
  */
 public abstract class DBPool {
 	
@@ -27,10 +28,7 @@ public abstract class DBPool {
 	 * from the document, one JedisPool is enough
 	 */
 	private static JedisPool pool = null;
-	// 后面去掉这两个 static, 其实这里就有一个依赖，实例 依赖 static 的实现
-	private static JedisConfig config = Config.getInstance().getJedisConfig();
-	private static Map<String, String> poolmap = config.getPool();
-
+	
 	/*
 	 * the name of the queue
 	 * Currently, just support one queuename
@@ -54,51 +52,23 @@ public abstract class DBPool {
 	static{
 
 		// 获取源代码进行改造
+		JedisConfig config = Config.getInstance().getJedisConfig();
+		JedisConfig.Pool configpool = config.getPool();
+		// 命名优点冲突，需要修改源代码
 		JedisPoolConfig poolconfig = new JedisPoolConfig();
 
-
-		// 传值的时候，必须使用String.valueOf()操作
-		// 不然, 报错 ： String  和 Double类型的异常 ，stackoverflow进行提问 
-		// 这个应该封转在自定义的map里面
-		int value = GsonInt(String.valueOf(poolmap.get("maxIdle")));
-
-		poolconfig.setMaxIdle(value);
-
-			// config.setMaxTotal(500) //整个池最大值
-			// 取代了这个  : config.setMaxActive(Integer.valueOf(props.getProperty("jedis.pool.maxActive")));
-			//config.setMaxTotalPerKey(5) //每个key的最大
-		
+		poolconfig.setMaxIdle(configpool.getMaxIdle());
+		// config.setMaxTotal(500) //整个池最大值
+		// 取代了这个  : config.setMaxActive(Integer.valueOf(props.getProperty("jedis.pool.maxActive")));
+		//config.setMaxTotalPerKey(5) //每个key的最大
 		poolconfig.setBlockWhenExhausted(true);	//资源耗尽 进行堵塞
+		poolconfig.setMaxWaitMillis(configpool.getMaxWait());
+		poolconfig.setTestOnBorrow(configpool.getTestOnBorrow());
+		poolconfig.setTestOnReturn(configpool.getTestOnReturn());
+		pool = new JedisPool(poolconfig, config.getIp(), config.getPort(), config.getTimeout(),config.getPass());						
 	
-		// poolconfig.setMaxWaitMillis(Long.valueOf(poolmap.get("maxWait")));
-		value = GsonInt(String.valueOf(poolmap.get("maxWait")));
-		poolconfig.setMaxWaitMillis(value);
-
-		// poolconfig.setTestOnBorrow(Boolean.valueOf(poolmap.get("testOnBorrow")));
-		poolconfig.setTestOnBorrow(true);
-
-		// poolconfig.setTestOnReturn(Boolean.valueOf(poolmap.get("testOnReturn")));
-		poolconfig.setTestOnReturn(true);
-
-
-			pool = new JedisPool(poolconfig, config.getIp(), config.getPort(), config.getTimeout(),config.getPass());					
-			
-
 	}
 
-	// 这个是gson解析导致的
-	public static int GsonInt(String d){
-        String value = String.valueOf(d);
-        value = value.substring(0,value.indexOf("."));
-        return Integer.valueOf(value);
-	}
-
-
-	// public static boolean GsonBool(String d){
- //        String value = String.valueOf(d);
- //        value = value.substring(0,value.indexOf("."));
- //        return Integer.valueOf(value);
-	// }
 
 	public static Jedis getJedisObject() {
 		return pool.getResource();

@@ -25,7 +25,7 @@ public class Config{
 
 	private static Config config = new Config(); 
 
-	// 对象存储层(以存储为主，一半不涉及)
+	// 对象存储层(以存储为主，一般不涉及)
 	private boolean mongoenabled = false;
 	private boolean mysqlenabled = false;
 
@@ -45,9 +45,7 @@ public class Config{
 	public static Config getInstance(){
 		return config;
 	}
-	// public Config(){
 
-	// }
 
 	public void parseConfig(String filename){
 	 	parseConfig(new File(filename));
@@ -96,6 +94,5 @@ public class Config{
 	// 配置不可修改
 	public MongoConfig getMongoConfig(){
 		return (new MongoConfig(mongo));
-		// return this.mongo
 	}
 }
