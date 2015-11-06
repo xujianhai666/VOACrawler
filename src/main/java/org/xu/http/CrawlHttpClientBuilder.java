@@ -899,7 +899,7 @@ public class CrawlHttpClientBuilder {
 
     /**
      *
-     * 只有两种 exec : main protocol 
+     * exec : main protocol retry unavialable
      * For internal use.
      */
     protected ClientExecChain decorateProtocolExec(final ClientExecChain protocolExec) {
@@ -1065,21 +1065,6 @@ public class CrawlHttpClientBuilder {
             }
         }
 
-        // 创建 exeChain
-        // createMainExec 
-        // requestExecCopy : 是执行者
-        // 
-        // new ImmutableHttpProcessor(new RequestTargetHost(), new RequestUserAgent(userAgentCopy))
-        // 
-        // 
-        // requestExec : io执行者 
-        // connManager : 连接管理， 需要自定义链接的个数
-        // requestStrategy : ConnectionReuseStrategy
-        // keepAlive : 
-        // httpProcessor :
-        // targetAuthStrategy
-        // proxyAuthStrategy
-        // userTokenHadler
         ClientExecChain execChain = createMainExec(
                 requestExecCopy,
                 connManagerCopy,
@@ -1170,16 +1155,14 @@ public class CrawlHttpClientBuilder {
         // Add request retry executor, if not disabled
         // builder模式可以放在 python的scrapy当中
         if (!automaticRetriesDisabled) {
-            // HttpRequestRetryHandler retryHandlerCopy = this.retryHandler;
-            // if (retryHandlerCopy == null) {
-            //     retryHandlerCopy = DefaultHttpRequestRetryHandler.INSTANCE;
-            // }
+
+             // 需要改回去，
             CrawlHttpRequestRetryHandler retryHandlerCopy = this.retryHandler;
             if (retryHandlerCopy == null) {
                 retryHandlerCopy = CrawlHttpRequestRetryHandler.INSTANCE;
             }
 
-            // 有进行了一次封装
+            // 有进行了一次封装，需要改回去
             execChain = new CrawlRetryExec(execChain, retryHandlerCopy);
         }
 
@@ -1199,8 +1182,8 @@ public class CrawlHttpClientBuilder {
                 routePlannerCopy = new DefaultRoutePlanner(schemePortResolverCopy);
             }
         }
-        // Add redirect executor, if not disabled
-        // 里面 有了重定向的处理
+  
+        // 这个是用来处理异常的 
         if (!redirectHandlingDisabled) {
             RedirectStrategy redirectStrategyCopy = this.redirectStrategy;
             if (redirectStrategyCopy == null) {
@@ -1209,8 +1192,7 @@ public class CrawlHttpClientBuilder {
             execChain = new RedirectExec(execChain, routePlannerCopy, redirectStrategyCopy);
         }
 
-        // Optionally, add service unavailable retry executor
-        // 重试策略，也得自己写, 5xx异常，足够用了
+        // 重试策略，添加了多个异常的处理
         final ServiceUnavailableRetryStrategy serviceUnavailStrategyCopy = this.serviceUnavailStrategy;
         if (serviceUnavailStrategyCopy != null) {
             execChain = new ServiceUnavailableRetryExec(execChain, serviceUnavailStrategyCopy);
@@ -1282,8 +1264,7 @@ public class CrawlHttpClientBuilder {
             });
         }
 
-        // 整体的装配很麻烦 ！
-        // 直接复制黏贴处理
+        // 包内可见
         return new InternalHttpClient(
                 execChain,
                 connManagerCopy,
@@ -1295,5 +1276,4 @@ public class CrawlHttpClientBuilder {
                 defaultRequestConfig != null ? defaultRequestConfig : RequestConfig.DEFAULT,
                 closeablesCopy);
     }
-
 }

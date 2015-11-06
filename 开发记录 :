@@ -36,8 +36,98 @@ useragent : ok
 retry :   ok 
 redirect :  // 看情况，是否需要进行处理 ok(使用自带的足够了)
 signals :
-downloadtimeout
-stats :  ()
+downloadtimeout ： 
+
+url的布隆过滤取的添加 :
+
+
+stats(统计) :  
+	按天进行统计
+	统计各个状态码的返回数量
+	统计发送和接收字节数
+	发送超时／失败的总次数(socket timeout/ conn timeout的参数调优)
+	无效响应的总次数
+	统计发送的总次数
+	统计重试次数(这个在日志中有)
+	发送的url数量 
+	接收的url数量
+
+＝》上面的有些重复，重新梳理一下 :
+	
+	 发送次数  发送的url数量  无效的url  超时的url
+	 接收有效响应次数  超时数量需要统计  
+
+＝》自己实现一个exec不久行了，然后获取Result就行了(result默认存储到本地文件中中)
+=> 也可字通过调度起进行获取，因为 每一次需要被获取的url都要被放倒调度器当中
+＝》可以启动多个调度器才行
+
+
+关于调度器:
+	engine : 获取url(init wait_queue 5xx_queue timeout_queue)  => 过滤(validate url)
+	donwload线程 : 获取url策略的实现 ＋ httpclient ＋ （钩子）是否调用responsehandler ＝》调用static
+	static :  (参考一下scrapy)
+	关于超时异常处理的interceptor  :
+
+
+httpclient有一个connManager , 那么，在多线程情况下，一个httpclient可以hold住很多链接，并且动态调整，那么，超时重试 =>5xx异常的处理方案是否合理呢？放倒一个超时queue不是更好吗？然后重新获取url进行处理，更改UnavailableExec的实现(添加将url放到timeout_queue的策略模式的实现)。
+
+参考httpclient多线程的问题 !	
+
+
+
+报表 控制台是空战是扩展实现的 :  控制台是程序运行结束的钩子
+	报表可以在运行时，可以在运行结束，获取的freeze的状态(在运行的时候，容易产生问题) 
+
+
+	怎么进行统计呢 ?
+
+	需要做成什么形式呢 ？
+		不同的统计策略 :
+			涉及到存储方案 ＋ 显示形式
+
+			显示形式 : 控制台  报表(简单的html)   （依赖本地统计策略,设置成默认吧）
+					  远程的报表就不管我的事情了
+
+			本地统计策略 ：
+				先做这个 ：
+					内存存储类型 ：
+						concurrentHashMap + 控制台输出 + 简单的报表显示
+					数据库存储类型 ：
+
+			远程统计策略 ：
+				本地kafka传输
+				远程  : crontab(kafka接收) + 日志处理 + 做成报表
+
+
+metrics(性能监控 : 可能的性能调优) :
+	方法调用次数(怎么从零开始计算？)
+	方法最长调用时间
+
+jmx ：
+	发送到控制台进行合并监控，更加方便
+
+
+替换httpclient的处理 ：
+	问题 ： 简单的httpclient的处理，返回response和request处理的页面处理
+	业务 ： mp3 page pdf 分成多个项目进行，彼此依赖queue, 什么时候完成呢 ？
+			这三个任务分成三个进程或者线程进行运行
+			关于自动更新 ： 
+				策略一 :
+					查看最新时间戳，对于按时间编排的内容的抓取，可以采用这个办法
+				策略二 :
+					对于只抓去固定板块内容的信息，直接抓去
+				策略三 :
+					对于已抓取的页面需要重新抓取的情况，比较哈西值
+
+response添加 EntityString的方法，方便 htmlparser 处理
+能不能不用htmlparser， 这个功能有点大
+
+
+扫描项目，获取注解，进行处理
+	扫描到的 页面处理方案 和 httpclient整合到一起，作为一个线程启动，httpclient多线程共享，根据配置文件启动过相应数量的线程，
+
+
+玩一下heritrix的使用
 
 
 Args的实现还是不错的
